@@ -34,7 +34,7 @@ export default function NewDishes() {
                         </AspectRatio>
                       </CardOverflow>
 
-                      <CardOverflow variant="soft" className="product-detail">
+                      <CardOverflow variant="soft" className="products-detail">
                         <Stack className="info">
                           <Stack flexDirection={"row"}>
                             <Typography className={"title"}>
