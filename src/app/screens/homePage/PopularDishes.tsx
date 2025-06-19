@@ -4,8 +4,8 @@ import Card from "@mui/joy/Card";
 import CardCover from "@mui/joy/CardCover";
 import CardContent from "@mui/joy/CardContent";
 import Typography from "@mui/joy/Typography";
-import CardOverflow from "@mui/joy/CardOverflow";
 import { CssVarsProvider } from "@mui/joy/styles";
+import CardOverflow from "@mui/joy/CardOverflow";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 
@@ -18,7 +18,7 @@ const list = [
 
 export default function PopularDishes() {
   return (
-    <div className="popular-dishes-frame">
+    <div className={"popular-dishes-frame"}>
       <Container>
         <Stack className="popular-section">
           <Box className="category-title">Popular Dishes</Box>
@@ -32,7 +32,7 @@ export default function PopularDishes() {
                         <img src={ele.imagePath} alt="" />
                       </CardCover>
                       <CardCover className={"card-cover"} />
-                      <CardContent>
+                      <CardContent sx={{ justifyContent: "flex-end" }}>
                         <Stack
                           flexDirection={"row"}
                           justifyContent={"space-between"}
@@ -55,7 +55,7 @@ export default function PopularDishes() {
                           >
                             20
                             <VisibilityIcon
-                              sx={{ fontSize: 25, marginLeft: "5px" }}
+                              sx={{ fontsize: "25", marginLeft: "5px" }}
                             />
                           </Typography>
                         </Stack>
@@ -72,7 +72,7 @@ export default function PopularDishes() {
                       >
                         <Typography
                           startDecorator={<DescriptionOutlinedIcon />}
-                          textColor="netural.300"
+                          textColor="neutral.300"
                         >
                           This is delicious meal
                         </Typography>
@@ -82,7 +82,7 @@ export default function PopularDishes() {
                 );
               })
             ) : (
-              <Box className="no-data">Popular products are not available!</Box>
+              <Box className="no-data">New products are not available!</Box>
             )}
           </Stack>
         </Stack>
