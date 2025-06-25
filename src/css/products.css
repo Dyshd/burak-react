@@ -150,7 +150,7 @@
   display: flex;
   flex-direction: column-reverse;
   align-items: center;
-  margin-left: 170px;
+  margin-left: 100px;
 }
 .products-page
   .products
@@ -266,17 +266,20 @@
   line-height: normal;
   display: flex;
   justify-content: center;
-  /* margin-top: 18px; */
+  position: relative;
 }
-.product-desc{
-  color: #E3C08D;
-font-family: Poppins;
-font-size: 24px;
-font-style: normal;
-font-weight: 600;
-line-height: normal;
-/* display: flex; */
-/* justify-content: center; */
+.product-desc {
+  color: #e3c08d;
+  font-family: Poppins;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  text-align: center;
+  position: relative;
+  top: 10px;
+  position: relative;
+  padding-bottom: 5px;
 }
 
 /* imglardi widht */
@@ -320,7 +323,6 @@ line-height: normal;
   font-weight: 600;
   line-height: normal;
 }
-
 
 /** ChosenProduct **/
 

@@ -55,6 +55,8 @@ export default function Products() {
                 variant={"contained"}
                 color={"secondary"}
                 className={"order"}
+                style={{ cursor: "pointer" }}
+
               >
                 Price
               </Button>
