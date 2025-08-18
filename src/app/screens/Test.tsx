@@ -29,7 +29,9 @@ class Test extends Component {
     console.log("componentWillUnmount");
   }
 
-  componentDidUpdate() {}
+  componentDidUpdate() {
+    console.log("componentDidUpdate");
+  }
 
   render() {
     return (
