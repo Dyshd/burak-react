@@ -14,7 +14,7 @@ export function Settings() {
             <Button component="label">
               <CloudDownloadIcon />
               <input type="file" hidden />
-            </Button>
+            </Button> 
           </div>
         </div>
       </Box>

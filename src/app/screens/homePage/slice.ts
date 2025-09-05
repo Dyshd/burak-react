@@ -5,7 +5,7 @@ const initialState: HomePageState = {
     popularDishes: [],
     newDishes: [],
     topUsers: [],
-}; 
+};
 
 const homePageSlice = createSlice({
     name: "homePage",
