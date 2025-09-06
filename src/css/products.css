@@ -498,3 +498,9 @@
   line-height: 43px;
   margin-top: 40px;
 }
+
+
+.shop-btn {
+  position: absolute;
+  z-index: 10;  /* rasm ustida ko‘rinishi uchun */
+}
