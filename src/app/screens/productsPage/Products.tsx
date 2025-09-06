@@ -238,7 +238,6 @@ const chooseDishHendler = (id: string) => {
                         className={"shop-btn"}
                         sx={{ position: "absolute", bottom: 20, left: 100 }}
                         onClick={(e) => {
-                          console.log("BUTTON PRESSED!");
                           onAdd({
                             _id: product._id,
                             quantity:1,

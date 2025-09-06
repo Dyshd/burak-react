@@ -47,11 +47,11 @@ interface ChosenProductProps {
 }
 
 export default function ChosenProduct(props: ChosenProductProps) {
-  const {onAdd} = props
+  const { onAdd } = props
   const { productId } = useParams<{ productId: string }>();
-  const {setRestaurant, setChosenProduct} = actionDispatch(useDispatch()); 
-  const {chosenProduct} =  useSelector(chosenProductRetriever);
-  const {restaurant} =  useSelector(restaurantRetriever);
+  const { setRestaurant, setChosenProduct } = actionDispatch(useDispatch());
+  const { chosenProduct } = useSelector(chosenProductRetriever);
+  const { restaurant } = useSelector(restaurantRetriever);
 
 
   useEffect(() => {
@@ -61,13 +61,13 @@ export default function ChosenProduct(props: ChosenProductProps) {
       .then((data) => setChosenProduct(data))
       .catch((err) => console.log(err));
 
-      const member = new MemberService();
-      member
-         .getRestaurant()
-         .then((data) => setRestaurant(data))
-         .catch((err) => console.log(err))
+    const member = new MemberService();
+    member
+      .getRestaurant()
+      .then((data) => setRestaurant(data))
+      .catch((err) => console.log(err))
   }, []);
-  if(!chosenProduct) return null;
+  if (!chosenProduct) return null;
   return (
     <div className={"chosen-product"}>
       <Box className={"title"}>Product Detail</Box>
@@ -114,7 +114,18 @@ export default function ChosenProduct(props: ChosenProductProps) {
               <span>{chosenProduct?.productPrice}</span>
             </div>
             <div className={"button-box"}>
-              <Button variant="contained">Add To Basket</Button>
+              <Button variant="contained"
+                onClick={(e) => {
+                  onAdd({
+                    _id: chosenProduct._id,
+                    quantity: 1,
+                    name: chosenProduct.productName,
+                    price: chosenProduct.productPrice,
+                    image: chosenProduct.productImages[0],
+                  });
+                  e.stopPropagation();
+                }}
+              >Add To Basket</Button>
             </div>
           </Box>
         </Stack>
