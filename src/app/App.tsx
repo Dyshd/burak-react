@@ -26,8 +26,8 @@ function App() {
   const [loginOpen, setLoginOpen] = useState<boolean>(false);
 
   /** HANDLERS **/
-const handleSignupClose = () => setSignupOpen(false)
-const handleLoginClose = () => setLoginOpen(false)
+  const handleSignupClose = () => setSignupOpen(false)
+  const handleLoginClose = () => setLoginOpen(false)
 
 
   return (
@@ -39,6 +39,8 @@ const handleLoginClose = () => setLoginOpen(false)
           onRemove={onRemove}
           onDelete={onDelete}
           onDeleteAll={onDeleteAll}
+          setSignupOpen={setSignupOpen}
+          setLoginOpen={setLoginOpen}
         />
       ) : (
         <OtherNavber
@@ -47,6 +49,8 @@ const handleLoginClose = () => setLoginOpen(false)
           onRemove={onRemove}
           onDelete={onDelete}
           onDeleteAll={onDeleteAll}
+          setSignupOpen={setSignupOpen}
+          setLoginOpen={setLoginOpen}
         />
       )}
       <Switch>
@@ -75,7 +79,7 @@ const handleLoginClose = () => setLoginOpen(false)
         loginOpen={loginOpen}
         handleLoginClose={handleLoginClose}
         handleSignupClose={handleSignupClose}
-      
+
       />
     </>
   );
