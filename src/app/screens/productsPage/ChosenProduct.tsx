@@ -68,6 +68,10 @@ export default function ChosenProduct(props: ChosenProductProps) {
       .catch((err) => console.log(err))
   }, []);
   if (!chosenProduct) return null;
+  function stopPropagation() {
+    throw new Error("Function not implemented.");
+  }
+
   return (
     <div className={"chosen-product"}>
       <Box className={"title"}>Product Detail</Box>
@@ -113,9 +117,10 @@ export default function ChosenProduct(props: ChosenProductProps) {
               <span>Price:</span>
               <span>{chosenProduct?.productPrice}</span>
             </div>
+            //123 satirda xato berdi e sababli 
             <div className={"button-box"}>
               <Button variant="contained"
-                onClick={(e) => {
+                onClick={() => {
                   onAdd({
                     _id: chosenProduct._id,
                     quantity: 1,
@@ -123,7 +128,7 @@ export default function ChosenProduct(props: ChosenProductProps) {
                     price: chosenProduct.productPrice,
                     image: chosenProduct.productImages[0],
                   });
-                  e.stopPropagation();
+                  stopPropagation();
                 }}
               >Add To Basket</Button>
             </div>

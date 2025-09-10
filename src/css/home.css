@@ -148,7 +148,7 @@
   margin: 47px 2px 2px 2px;
   display: flex;
   flex-direction: row; /* Tezasi yonma-yon bo'ladi */
-  justify-content: space-between;
+  /* justify-content: space-between; */
   flex-wrap: wrap; /* Agar joy yetmasa, pastga tushadi */
   gap: 20px; /* Orasiga masofa */
 }
@@ -290,7 +290,7 @@
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   flex-direction: row;
 }
 

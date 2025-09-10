@@ -218,6 +218,10 @@ const chooseDishHendler = (id: string) => {
                const imagePath = `${serverApi}/${product.productImages[0]}`
                const sizeVolume = product.productCollection === ProductCollection.DRINK ? product.productVolume + "litre" : product.productSize +"size"
           
+                function stopPropagation() {
+                  throw new Error("Function not implemented.");
+                }
+
                 return (
                   <Stack key={product._id} className={"product-card"} onClick={() =>chooseDishHendler (product._id)}>
                     <Stack
@@ -232,12 +236,12 @@ const chooseDishHendler = (id: string) => {
                         position: "relative",
                       }}
                     >
+                      //e xarifda xato berdi 244 satir
                       <div className={"product-sale"}>{sizeVolume}</div>
-
                       <Button
                         className={"shop-btn"}
                         sx={{ position: "absolute", bottom: 20, left: 100 }}
-                        onClick={(e) => {
+                        onClick={() => {
                           onAdd({
                             _id: product._id,
                             quantity:1,
@@ -245,7 +249,7 @@ const chooseDishHendler = (id: string) => {
                             price: product.productPrice,
                             image: product.productImages[0],
                           });
-                          e.stopPropagation();
+                          stopPropagation();
                         }}
                       >
                         <img

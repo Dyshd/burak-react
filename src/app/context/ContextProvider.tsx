@@ -18,7 +18,7 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     <GlobalContext.Provider
       value={{ authMember, setAuthMember}}
     >
-      {children}
+      {children}  
     </GlobalContext.Provider>
   );
 };
