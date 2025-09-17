@@ -47,7 +47,7 @@ function App() {
 
       await sweetTopSuccessAlert("succsess", 700)
       setAuthMember(null);
-
+ 
     } catch (err) {
       console.log(err)
       sweetErrorHandling(Messages.error1);

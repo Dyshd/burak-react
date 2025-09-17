@@ -505,3 +505,29 @@
   background: #343434;
   border-radius: 50%;
 }
+
+
+
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  overflow: hidden;   /* 👈 rasm tashqariga chiqmaydi */
+  border-radius: 12px;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.card img {
+  transition: transform 0.3s ease;
+  display: block;        /* tasvir block bo‘lsin */
+  width: 100%;           /* kartochkani to‘liq qoplashi uchun */
+  height: 100%;
+  object-fit: cover;     /* tasvir qirqilsa ham mutanosib bo‘lsin */
+}
+
+.card:hover img {
+  transform: scale(1.05);
+}

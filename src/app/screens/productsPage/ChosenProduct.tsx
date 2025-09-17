@@ -117,9 +117,8 @@ export default function ChosenProduct(props: ChosenProductProps) {
               <span>Price:</span>
               <span>{chosenProduct?.productPrice}</span>
             </div>
-            //123 satirda xato berdi e sababli 
             <div className={"button-box"}>
-              <Button variant="contained"
+              {/* <Button variant="contained"
                 onClick={() => {
                   onAdd({
                     _id: chosenProduct._id,
@@ -130,7 +129,26 @@ export default function ChosenProduct(props: ChosenProductProps) {
                   });
                   stopPropagation();
                 }}
-              >Add To Basket</Button>
+              >Add To Basket</Button> */}
+
+              <Button
+                variant="contained"
+                onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                  e.preventDefault();       // sahifa yangilanmasin
+                  e.stopPropagation();      // event tashqariga chiqmasin
+
+                  onAdd({
+                    _id: chosenProduct._id,
+                    quantity: 1,
+                    name: chosenProduct.productName,
+                    price: chosenProduct.productPrice,
+                    image: chosenProduct.productImages[0],
+                  });
+                }}
+              >
+                Add To Basket
+              </Button>
+
             </div>
           </Box>
         </Stack>

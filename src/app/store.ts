@@ -27,7 +27,7 @@
 
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import HomePageReducer from "./screens/homePage/slice";
-import { logger } from "redux-logger";
+import  logger  from "redux-logger";
 import type { Middleware } from "@reduxjs/toolkit"; // ✅ qo‘shimcha
 import ProductsPageReducer from "./screens/productsPage/slice";
 import OrdersPageReducer from "./screens/ordersPage/slice";
@@ -35,7 +35,7 @@ import OrdersPageReducer from "./screens/ordersPage/slice";
 export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     //@ts-ignore
-    getDefaultMiddleware().concat(ReduxLogger), // ✅ cast qildik
+    getDefaultMiddleware().concat(logger), // ✅ cast qildik
   reducer: {
     homePage: HomePageReducer,
     productsPage: ProductsPageReducer,

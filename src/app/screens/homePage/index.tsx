@@ -21,14 +21,14 @@ import { Member } from "../../../lib/types/member";
 const actionDispatch = (dispatch: Dispatch) => ({
   setPopularDishes: (data: Product[]) => dispatch(setPopularDishes(data)),
   setNewDishes: (data: Product[]) => dispatch(setNewDishes(data)),
-  setTopUsers: (data: Member[]) => dispatch(setTopUsers(data)),
+  setTopUsers: (data: Member[]) => dispatch(setTopUsers(data)),               
 });
 
 export default function HomePage() {
   const { setPopularDishes, setNewDishes, setTopUsers } = actionDispatch(useDispatch());
    
     useEffect(() => {
-      // Backend server  data fetch => data
+      // Backend server  data featch => data
       const product = new ProductService();
 
       product.getProducts({

@@ -131,6 +131,22 @@
   z-index: 9999;
   top: 150px;
 }
+.list-category-section {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  position: relative;   /* joyidan siljimaydi */
+  z-index: 10;          /* boshqa bloklar ustida turishi uchun */
+}
+
+.product-wrapper {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  padding: 20px;
+  min-height: 400px;      /* product bo‘lmasa ham joy bo‘sh qoladi */
+  align-items: flex-start;
+}
+
 
 .products-page .products .list-category-section .product-category {
   position: relative;
