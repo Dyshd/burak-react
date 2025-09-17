@@ -1,3 +1,83 @@
+import React from "react";
+import { Box, Stack } from "@mui/material";
+import Button from "@mui/material/Button";
+import TabPanel from "@mui/lab/TabPanel";
+import moment from "moment";
+
+import { useSelector } from "react-redux";
+import { createSelector } from "reselect";
+import { retrievePausedOrders, retrieveProcessOrders } from "./selector";
+import { serverApi } from "../../../lib/config";
+import { Order, OrderItem } from "../../../lib/types/order";
+import { Product } from "../../../lib/types/product";
+/** REDUX SLICE & SELECTOR */
+const processOrdersRetriever = createSelector(
+  retrieveProcessOrders,
+  (processOrders) => ({ processOrders })
+);
+
+export default function ProcessOrders() {
+  const { processOrders } = useSelector(processOrdersRetriever);
+
+  return (
+    <TabPanel value={"2"}>
+      <Stack>
+        {processOrders?.map((order: Order) => {
+          return (
+            <Box key={order._id} className={"order-main-box"}>
+              <Box className={"order-box-scroll"}>
+                {order?.orderItems.map((item: OrderItem, index2) => {
+                  const product: Product =
+                    order.productData.filter((ele: Product) => item.productId === ele._id)[0];
+                  const imagePath = `${serverApi}/${product.productImages[0]}`;
+                  return (
+                    <Box key={item._id} className={"orders-name-price"}>
+                      <img src={imagePath} className={"order-dish-img"} />
+                      <p className={"title-dish"}>{product.productName}</p>
+                      <Box className={"price-box"}>
+                        <p>${product.productPrice}</p>
+                        <img src={"/icons/close.svg"} />
+                        <p>{item.itemQuantity}</p>
+                        <img src={"/icons/pause.svg"} />
+                            <p style={{ marginLeft: "15px" }}>${item.itemQuantity * item.itemPrice}</p>
+                      </Box>
+                    </Box>
+                  );
+                })}
+              </Box>
+
+              <Box className={"total-price-box"}>
+                <Box className={"box-total"}>
+                  <p>Product price</p>
+                  <p>${order.orderTotal - order.orderDelivery}</p>
+                  <img src={"/icons/plus.svg"} style={{ marginLeft: "20px" }} />
+                  <p>delivery cost</p>
+                  <p>${order.orderDelivery}</p>
+                  <img src={"/icons/pause.svg"} style={{ marginLeft: "20px" }} />
+                  <p>Total</p>
+                   <p>${order.orderTotal}</p>
+                  <p className={"data-compl"}>
+                    {moment().format("YY-MM-DD HH:mm")}
+                  </p>
+                  <Button variant="contained" className={"verify-button"}>
+                    Verify to Fulfil
+                  </Button>
+                </Box>
+              </Box>
+            </Box>
+          );
+        })}
+
+        {!processOrders || processOrders.length === 0  && (
+          <Box display={"flex"} flexDirection={"row"} justifyContent={"center"}>
+            <img src={"/icons/noimage-list.svg"} style={{ width: 300, height: 300 }} />
+          </Box>
+        )}
+      </Stack>
+    </TabPanel>
+  )};
+
+
 // import React from "react";
 // import { Box, Stack } from "@mui/material";
 // import Button from "@mui/material/Button";
@@ -8,155 +88,79 @@
 //   return (
 //     <TabPanel value={"2"}>
 //       <Stack>
-//         {[1, 2].map((ele, index) => {
-//           return (
-//             <Box key={index} className={"order-main-box"}>
-//               <Box className={"order-box-scroll"}>
-//                 {[1, 2].map((ele2, index2) => {
-//                   return (
-//                     <Box key={index2} className={"orders-name-price"}>
-//                       <img
-//                         src={"/img/lavash.webp"}
-//                         className={"order-dish-img"}
-//                       />
-//                       <p className={"title-dish"}>Lavash</p>
-//                       <Box className={"price-box"}>
-//                         <p>$11</p>
-//                         <img src={"/icons/close.svg"} />
-//                         <p>2</p>
-//                         <img src={"/icons/pause.svg"} />
-//                         <p style={{ marginLeft: "15px" }}>$22</p>
-//                       </Box>
-//                     </Box>
-//                   );
-//                 })}
-//               </Box>
-
-//               <Box className={"total-price-box"}>
-//                 <Box className={"box-total"}>
-//                   <p>Product price</p>
-//                   <p>$22</p>
-//                   <img
-//                     src={"/icons/plus.svg"}
-//                     style={{ marginLeft: "20px" }}
-//                   ></img>
-//                   <p>deliveri cost</p>
-//                   <p>$2</p>
-//                   <img
-//                     src={"/icons/pause.svg"}
-//                     style={{ marginLeft: "20px" }}
-//                   />
-//                   <p>Total</p>
-//                   <p>$24</p>
-//                   <p className={"data-compl"}>
-//                     {moment().format("YY-MM-DD HH:mm")}
-//                   </p>
-//                   <Button variant="contained" className={"verify-button"}>
-//                     Verify to Fulfil
-//                   </Button>
+//         <Box className={"order-main-box"}>
+//           <Box className={"order-box-scroll"}>
+//             {['Fried chicken', 'Winner', 'Stack'].map((item, index) => (
+//               <Box key={index} className={"orders-name-price"}>
+//                 <img src={"/img/lavash.webp"} className={"order-dish-img"} />
+//                 <p className={"title-dish"}>{item}</p>
+//                 <Box className={"price-box"}>
+//                   <p>$10</p>
+//                   <img src={"/icons/close.svg"} />
+//                   <p>2</p>
+//                   <img src={"/icons/pause.svg"} />
+//                   <p style={{ marginLeft: "15px" }}>$20</p>
 //                 </Box>
 //               </Box>
-//             </Box>
-//           );
-//         })}
-
-//         {false && (
-//           <Box display={"flex"} flexDirection={"row"} justifyContent={"center"}>
-//             <img
-//               src={"/icons/noimage-list.svg"}
-//               style={{ width: 300, height: 300 }}
-//             />
+//             ))}
 //           </Box>
-//         )}
+
+//           <Box className={"total-price-box"}>
+//             <Box className={"box-total"}>
+//               <p>Product price</p>
+//               <p>$60</p>
+//               <img src={"/icons/plus.svg"} style={{ marginLeft: "20px" }} />
+//               <p>Delivery cost</p>
+//               <p>$5</p>
+//               <img src={"/icons/pause.svg"} style={{ marginLeft: "20px" }} />
+//               <p>Total</p>
+//               <p>$65</p>
+//               <p className={"data-compl"}>
+//                 {moment().format("YY-MM-DD HH:mm")}
+//               </p>
+//             </Box>
+//             <Button variant="contained" className={"verify-button"}>
+//               VERIFY TO FULFIL
+//             </Button>
+//           </Box>
+//         </Box>
+//         <Box className={"order-main-box"}>
+//           <Box className={"order-box-scroll"}>
+//             {['Fried chicken', 'Winner', 'Stack'].map((item, index) => (
+//               <Box key={index} className={"orders-name-price"}>
+//                 <img src={"/img/lavash.webp"} className={"order-dish-img"} />
+//                 <p className={"title-dish"}>{item}</p>
+//                 <Box className={"price-box"}>
+//                   <p>$10</p>
+//                   <img src={"/icons/close.svg"} />
+//                   <p>2</p>
+//                   <img src={"/icons/pause.svg"} />
+//                   <p style={{ marginLeft: "15px" }}>$20</p>
+//                 </Box>
+//               </Box>
+//             ))}
+//           </Box>
+
+//           <Box className={"total-price-box"}>
+//             <Box className={"box-total"}>
+//               <p>Product price</p>
+//               <p>$60</p>
+//               <img src={"/icons/plus.svg"} style={{ marginLeft: "20px" }} />
+//               <p>Delivery cost</p>
+//               <p>$5</p>
+//               <img src={"/icons/pause.svg"} style={{ marginLeft: "20px" }} />
+//               <p>Total</p>
+//               <p>$65</p>
+//               <p className={"data-compl"}>
+//                 {moment().format("YY-MM-DD HH:mm")}
+//               </p>
+//             </Box>
+//             <Button variant="contained" className={"verify-button"}>
+//               VERIFY TO FULFIL
+//             </Button>
+//           </Box>
+//         </Box>
 //       </Stack>
 //     </TabPanel>
 //   );
 // }
-
-
-import React from "react";
-import { Box, Stack } from "@mui/material";
-import Button from "@mui/material/Button";
-import TabPanel from "@mui/lab/TabPanel";
-import moment from "moment";
-
-export default function ProcessOrders() {
-  return (
-    <TabPanel value={"2"}>
-      <Stack>
-        <Box className={"order-main-box"}>
-          <Box className={"order-box-scroll"}>
-            {['Fried chicken', 'Winner', 'Stack'].map((item, index) => (
-              <Box key={index} className={"orders-name-price"}>
-                <img src={"/img/lavash.webp"} className={"order-dish-img"} />
-                <p className={"title-dish"}>{item}</p>
-                <Box className={"price-box"}>
-                  <p>$10</p>
-                  <img src={"/icons/close.svg"} />
-                  <p>2</p>
-                  <img src={"/icons/pause.svg"} />
-                  <p style={{ marginLeft: "15px" }}>$20</p>
-                </Box>
-              </Box>
-            ))}
-          </Box>
-
-          <Box className={"total-price-box"}>
-            <Box className={"box-total"}>
-              <p>Product price</p>
-              <p>$60</p>
-              <img src={"/icons/plus.svg"} style={{ marginLeft: "20px" }} />
-              <p>Delivery cost</p>
-              <p>$5</p>
-              <img src={"/icons/pause.svg"} style={{ marginLeft: "20px" }} />
-              <p>Total</p>
-              <p>$65</p>
-              <p className={"data-compl"}>
-                {moment().format("YY-MM-DD HH:mm")}
-              </p>
-            </Box>
-            <Button variant="contained" className={"verify-button"}>
-              VERIFY TO FULFIL
-            </Button>
-          </Box>
-        </Box>
-        <Box className={"order-main-box"}>
-          <Box className={"order-box-scroll"}>
-            {['Fried chicken', 'Winner', 'Stack'].map((item, index) => (
-              <Box key={index} className={"orders-name-price"}>
-                <img src={"/img/lavash.webp"} className={"order-dish-img"} />
-                <p className={"title-dish"}>{item}</p>
-                <Box className={"price-box"}>
-                  <p>$10</p>
-                  <img src={"/icons/close.svg"} />
-                  <p>2</p>
-                  <img src={"/icons/pause.svg"} />
-                  <p style={{ marginLeft: "15px" }}>$20</p>
-                </Box>
-              </Box>
-            ))}
-          </Box>
-
-          <Box className={"total-price-box"}>
-            <Box className={"box-total"}>
-              <p>Product price</p>
-              <p>$60</p>
-              <img src={"/icons/plus.svg"} style={{ marginLeft: "20px" }} />
-              <p>Delivery cost</p>
-              <p>$5</p>
-              <img src={"/icons/pause.svg"} style={{ marginLeft: "20px" }} />
-              <p>Total</p>
-              <p>$65</p>
-              <p className={"data-compl"}>
-                {moment().format("YY-MM-DD HH:mm")}
-              </p>
-            </Box>
-            <Button variant="contained" className={"verify-button"}>
-              VERIFY TO FULFIL
-            </Button>
-          </Box>
-        </Box>
-      </Stack>
-    </TabPanel>
-  );
-}
