@@ -7,18 +7,53 @@ import moment from "moment";
 import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
 import { retrievePausedOrders, retrieveProcessOrders } from "./selector";
-import { serverApi } from "../../../lib/config";
-import { Order, OrderItem } from "../../../lib/types/order";
+import { Messages, serverApi } from "../../../lib/config";
+import { Order, OrderItem, OrderUpdateInput } from "../../../lib/types/order";
 import { Product } from "../../../lib/types/product";
+import { useGlobals } from "../../hooks/useGlobals";
+import { OrderStatus } from "../../../lib/enums/order.enum";
+import OrderService from "../../services/OrderService";
+import { sweetErrorHandling } from "../../../lib/sweetAlert";
+import { T } from "../../../lib/types/common";
+
 /** REDUX SLICE & SELECTOR */
 const processOrdersRetriever = createSelector(
   retrieveProcessOrders,
   (processOrders) => ({ processOrders })
 );
 
-export default function ProcessOrders() {
+
+interface ProcessOrdersProps {
+  setValue: (input: string) => void;
+}
+
+export default function ProcessOrders(props: ProcessOrdersProps) {
+  const { setValue } = props;
+  const { authMember, setOrderBuilder } = useGlobals();
   const { processOrders } = useSelector(processOrdersRetriever);
 
+
+  // Hendlers
+
+    const finishOrderHenler = async (e: T) => {
+    try{
+      if(!authMember) throw new Error(Messages.error2)
+        // Payment process
+      const orderId = e.target.value;
+      const input: OrderUpdateInput = {orderId: orderId, orderStatus: OrderStatus.FINISH,};
+
+      const confirmation = window.confirm("Have you proceived your order?")
+      if(confirmation) {
+        const order = new OrderService();
+        await order.updateOrder(input);
+        setValue("3");
+       setOrderBuilder(new Date())
+      }
+    }catch(err){
+      console.log(err);
+      sweetErrorHandling(err).then();
+    }
+  }
   return (
     <TabPanel value={"2"}>
       <Stack>
@@ -39,7 +74,7 @@ export default function ProcessOrders() {
                         <img src={"/icons/close.svg"} />
                         <p>{item.itemQuantity}</p>
                         <img src={"/icons/pause.svg"} />
-                            <p style={{ marginLeft: "15px" }}>${item.itemQuantity * item.itemPrice}</p>
+                        <p style={{ marginLeft: "15px" }}>${item.itemQuantity * item.itemPrice}</p>
                       </Box>
                     </Box>
                   );
@@ -55,11 +90,11 @@ export default function ProcessOrders() {
                   <p>${order.orderDelivery}</p>
                   <img src={"/icons/pause.svg"} style={{ marginLeft: "20px" }} />
                   <p>Total</p>
-                   <p>${order.orderTotal}</p>
+                  <p>${order.orderTotal}</p>
                   <p className={"data-compl"}>
                     {moment().format("YY-MM-DD HH:mm")}
                   </p>
-                  <Button variant="contained" className={"verify-button"}>
+                  <Button value={order._id} variant="contained" className={"verify-button"} onClick={finishOrderHenler}>
                     Verify to Fulfil
                   </Button>
                 </Box>
@@ -68,14 +103,15 @@ export default function ProcessOrders() {
           );
         })}
 
-        {!processOrders || processOrders.length === 0  && (
+        {!processOrders || processOrders.length === 0 && (
           <Box display={"flex"} flexDirection={"row"} justifyContent={"center"}>
             <img src={"/icons/noimage-list.svg"} style={{ width: 300, height: 300 }} />
           </Box>
         )}
       </Stack>
     </TabPanel>
-  )};
+  )
+};
 
 
 // import React from "react";
